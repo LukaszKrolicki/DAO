@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface BookDAO {
     void create(Book book);
 
-    Optional<Book> findOne(long l);
+    Optional<Book> findOne(String l);
 }

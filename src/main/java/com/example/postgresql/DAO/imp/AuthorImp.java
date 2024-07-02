@@ -4,10 +4,12 @@ import com.example.postgresql.DAO.AuthorDAO;
 import com.example.postgresql.domain.Author;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class AuthorImp implements AuthorDAO {
     private final JdbcTemplate jdbcTemplate;
 
@@ -18,7 +20,7 @@ public class AuthorImp implements AuthorDAO {
     @Override
     public void create(Author author) {
         jdbcTemplate.update(
-                "INSERT INTO author (id, name, age) VALUES (?, ?, ?)",
+                "INSERT INTO authors (id, name, age) VALUES (?, ?, ?)",
                 author.getId(), author.getName(), author.getAge()
         );
     }
@@ -26,7 +28,7 @@ public class AuthorImp implements AuthorDAO {
     @Override
     public Optional<Author> findOne(long l) {
         List<Author> results = jdbcTemplate.query(
-                "SELECT * FROM author WHERE id = ?",
+                "SELECT * FROM authors WHERE id = ?",
                 new AuthorRawMapper(),
                 l
         );

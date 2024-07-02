@@ -1,6 +1,7 @@
 package com.example.postgresql.dao;
 
 import com.example.postgresql.DAO.imp.BookImp;
+import com.example.postgresql.TestDataUtil;
 import com.example.postgresql.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,20 +25,20 @@ public class BookDaoImpTests {
 
     @Test
     public void testThatCreatesBookGeneratesCorrectSQL() {
-        Book book = Book.builder().isbn("xd").authorId(1L).title("Book Title").build();
+        Book book = TestDataUtil.createBook();
         underTest.create(book);
 
         verify(jdbcTemplate).update(
-                eq("INSERT INTO book (id, author_id, title) VALUES (?, ?, ?)"),
+                eq("INSERT INTO books (isbn, author_id, title) VALUES (?, ?, ?)"),
                 eq("xd"), eq(1L), eq("Book Title"));
     }
 
     @Test
     public void TestThatFindOneGeneratesCorrectSQL() {
-        underTest.findOne(1L);
+        underTest.findOne("xd");
 
         verify(jdbcTemplate).query(
-                eq("SELECT * FROM book WHERE id = ?"), ArgumentMatchers.<BookImp.BookRawMapper>any(), eq(1L)
+                eq("SELECT * FROM books WHERE isbn = ?"), ArgumentMatchers.<BookImp.BookRawMapper>any(), eq("xd")
         );
     }
 }
