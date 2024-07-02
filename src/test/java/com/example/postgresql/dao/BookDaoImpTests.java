@@ -4,6 +4,7 @@ import com.example.postgresql.DAO.imp.BookImp;
 import com.example.postgresql.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -31,4 +32,12 @@ public class BookDaoImpTests {
                 eq("xd"), eq(1L), eq("Book Title"));
     }
 
+    @Test
+    public void TestThatFindOneGeneratesCorrectSQL() {
+        underTest.findOne(1L);
+
+        verify(jdbcTemplate).query(
+                eq("SELECT * FROM book WHERE id = ?"), ArgumentMatchers.<BookImp.BookRawMapper>any(), eq(1L)
+        );
+    }
 }
