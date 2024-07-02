@@ -13,6 +13,14 @@ public final class TestDataUtil {
         return Author.builder().id(1L).name("John Doe").age(30).build();
     }
 
+    public static Author createTestAuthor2() {
+        return Author.builder().id(2L).name("John Do").age(30).build();
+    }
+
+    public static Author createTestAuthor3() {
+        return Author.builder().id(3L).name("John D").age(30).build();
+    }
+
     public static Book createBook() {
         return Book.builder().isbn("xd").title("Book Title").authorId(1L).build();
     }

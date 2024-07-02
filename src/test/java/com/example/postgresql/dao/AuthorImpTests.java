@@ -42,4 +42,13 @@ public class AuthorImpTests {
                 eq("SELECT * FROM authors WHERE id = ?"), ArgumentMatchers.<AuthorImp.AuthorRawMapper>any(), eq(1L)
         );
     }
+
+    @Test
+    public void FindManyGeneratesCorrectSQL() {
+        underTest.findMany();
+
+        verify(jdbcTemplate).query(
+                eq("SELECT * FROM authors"), ArgumentMatchers.<AuthorImp.AuthorRawMapper>any()
+        );
+    }
 }

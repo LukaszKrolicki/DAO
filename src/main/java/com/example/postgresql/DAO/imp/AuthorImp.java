@@ -36,6 +36,15 @@ public class AuthorImp implements AuthorDAO {
         return results.stream().findFirst();
     }
 
+    @Override
+    public List<Author> findMany() {
+        return jdbcTemplate.query(
+                "SELECT * FROM authors",
+                new AuthorRawMapper()
+        );
+    }
+
+
     public static class AuthorRawMapper implements RowMapper<Author>{
         @Override
         public Author mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {
