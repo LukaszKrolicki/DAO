@@ -51,4 +51,16 @@ public class AuthorImpIntegrationTests {
         assertThat(result).hasSize(3).contains(author, author2, author3);
     }
 
+
+    @Test
+    public void testUpdate(){
+        Author author = TestDataUtil.createTestAuthor();
+        underTest.create(author);
+        author.setName("Jane Doe");
+        author.setAge(40);
+        underTest.update(author, author.getId());
+        Optional<Author> result = underTest.findOne(author.getId());
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get()).isEqualTo(author);
+    }
 }

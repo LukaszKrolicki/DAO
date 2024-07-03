@@ -51,4 +51,16 @@ public class AuthorImpTests {
                 eq("SELECT * FROM authors"), ArgumentMatchers.<AuthorImp.AuthorRawMapper>any()
         );
     }
+
+    @Test
+    public void testThatUpdateOneGeneratesCorrectSQL() {
+        Author author = TestDataUtil.createTestAuthor();
+
+        underTest.update(author,3L);
+
+        verify(jdbcTemplate).update(
+                eq("UPDATE authors SET name = ?, age = ? WHERE id = ?"),
+                eq("John Doe"),eq(30),eq(3L)
+        );
+    }
 }

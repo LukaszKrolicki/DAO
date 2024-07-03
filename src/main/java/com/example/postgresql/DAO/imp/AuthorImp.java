@@ -44,6 +44,14 @@ public class AuthorImp implements AuthorDAO {
         );
     }
 
+    @Override
+    public void update(Author author,long id) {
+        jdbcTemplate.update(
+                "UPDATE authors SET name = ?, age = ? WHERE id = ?",
+                author.getName(), author.getAge(), id
+        );
+    }
+
 
     public static class AuthorRawMapper implements RowMapper<Author>{
         @Override
