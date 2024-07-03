@@ -37,6 +37,13 @@ public class BookImp implements BookDAO {
         return results.stream().findFirst();
     }
 
+    @Override
+    public List<Book> findMany() {
+        return jdbcTemplate.query(
+                "SELECT * FROM books",
+                new BookRawMapper()
+        );
+    }
     public static class BookRawMapper implements RowMapper<Book> {
         @Override
         public Book mapRow(java.sql.ResultSet rs, int rowNum) throws java.sql.SQLException {

@@ -10,14 +10,18 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BookImpIntegrationTests {
 
     BookImp underTest;
@@ -41,5 +45,21 @@ public class BookImpIntegrationTests {
 
         assertThat(result.isPresent()).isTrue();
         assertThat(result.get()).isEqualTo(book);
+    }
+
+    @Test
+    public void testThatMultpleBookCanBeCreatedAndRetrieved() {
+        Book book2 = TestDataUtil.createBook2();
+        Author author = TestDataUtil.createTestAuthor();
+        authorDAO.create(author);
+        underTest.create(book2);
+        Author author2 = TestDataUtil.createTestAuthor2();
+        authorDAO.create(author2);
+        Book book3 = TestDataUtil.createBook3();
+        underTest.create(book3);
+
+        List<Book> result = underTest.findMany();
+
+        assertThat(result).hasSize(2).contains(book2, book3);
     }
 }
