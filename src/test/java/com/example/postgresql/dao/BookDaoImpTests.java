@@ -56,4 +56,13 @@ public class BookDaoImpTests {
                 eq(2L), eq("New Title"), eq("xd")
         );
     }
+
+    @Test
+    public void testDlete(){
+        underTest.delete("xd");
+        verify(jdbcTemplate).update(
+                eq("DELETE FROM books WHERE isbn = ?"),
+                eq("xd")
+        );
+    }
 }

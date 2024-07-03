@@ -63,4 +63,13 @@ public class AuthorImpTests {
                 eq("John Doe"),eq(30),eq(3L)
         );
     }
+
+    @Test
+    public void testThatDeleteGeneratesCorrectSQL() {
+        underTest.delete(1L);
+
+        verify(jdbcTemplate).update(
+                eq("DELETE FROM authors WHERE id = ?"), eq(1L)
+        );
+    }
 }

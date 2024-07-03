@@ -45,10 +45,18 @@ public class AuthorImp implements AuthorDAO {
     }
 
     @Override
-    public void update(Author author,long id) {
+    public void update(Author author, long id) {
         jdbcTemplate.update(
                 "UPDATE authors SET name = ?, age = ? WHERE id = ?",
                 author.getName(), author.getAge(), id
+        );
+    }
+
+    @Override
+    public void delete(long l) {
+        jdbcTemplate.update(
+                "DELETE FROM authors WHERE id = ?",
+                l
         );
     }
 

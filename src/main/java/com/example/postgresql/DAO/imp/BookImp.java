@@ -53,6 +53,14 @@ public class BookImp implements BookDAO {
         );
     }
 
+    @Override
+    public void delete(String xd) {
+        jdbcTemplate.update(
+                "DELETE FROM books WHERE isbn = ?",
+                xd
+        );
+    }
+
 
     public static class BookRawMapper implements RowMapper<Book> {
         @Override

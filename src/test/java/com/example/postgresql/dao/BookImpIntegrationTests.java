@@ -81,4 +81,16 @@ public class BookImpIntegrationTests {
         assertThat(result.isPresent()).isTrue();
         assertThat(result.get()).isEqualTo(book);
     }
+
+    @Test
+    public void testDeleteBook(){
+        Book book = TestDataUtil.createBook();
+        Author author = TestDataUtil.createTestAuthor();
+        authorDAO.create(author);
+        book.setAuthorId(author.getId());
+        underTest.create(book);
+        underTest.delete(book.getIsbn());
+        Optional<Book> result = underTest.findOne(book.getIsbn());
+        assertThat(result.isEmpty()).isTrue();
+    }
 }
